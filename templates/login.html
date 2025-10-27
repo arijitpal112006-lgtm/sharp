@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Login</title>
+  <style>
+    :root{
+      --bg1: #ff8a65;
+      --bg2: #7c4dff;
+      --card: #ffffff;
+      --accent: #00e5ff;
+      --muted: #6b6b6b;
+      --success: #2ecc71;
+      --danger: #e74c3c;
+      --glass: rgba(255,255,255,0.08);
+      font-family: "Inter", system-ui, Arial, sans-serif;
+    }
+    html,body{
+      height:100%;
+      margin:0;
+      background: linear-gradient(135deg,var(--bg1),var(--bg2));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .container{
+      width: 360px;
+      max-width:94%;
+      background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+      color: #fff;
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      margin-bottom:12px;
+    }
+    .logo {
+      width:48px; height:48px;
+      border-radius:12px;
+      background: #fff;
+      overflow:visible;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+    }
+    .logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius:12px;
+    }
+
+    h1{
+      font-size:18px;
+      margin:0;
+      letter-spacing:0.2px;
+    }
+
+    p.lead{
+      margin:6px 0 18px 0;
+      color: rgba(255,255,255,0.85);
+      font-size:13px;
+      opacity:0.95;
+    }
+
+    form{
+      display:grid;
+      gap:12px;
+    }
+
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+    }
+
+    label{
+      font-size:13px;
+      color: #fff;
+      opacity:0.9;
+    }
+
+    input[type="text"], input[type="password"], select {
+      padding:12px;
+      border-radius:10px;
+      border: none;
+      outline: none;
+      font-size:14px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+      color: #fff;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
+      transition: box-shadow .15s, transform .08s;
+    }
+
+    select {
+      appearance: none;
+      background-image: url('data:image/svg+xml;utf8,<svg fill="white" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      background-size: 18px;
+      padding-right: 40px;
+    }
+
+    input:focus, select:focus {
+      box-shadow: 0 6px 20px rgba(0,0,0,0.35), 0 0 0 4px rgba(0,229,255,0.08);
+      transform: translateY(-1px);
+    }
+
+    .controls{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:8px;
+    }
+
+    .remember{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      font-size:13px;
+      color:#fff;
+      opacity:0.9;
+    }
+
+    .btn{
+      margin-top:6px;
+      width:100%;
+      padding:12px;
+      background: linear-gradient(90deg,#00e5ff,#7c4dff);
+      color:#051014;
+      border:none;
+      border-radius:12px;
+      font-weight:600;
+      cursor:pointer;
+      box-shadow: 0 8px 30px rgba(124,77,255,0.28);
+      transition: transform .12s, box-shadow .12s, opacity .12s;
+    }
+    .btn:active{ transform: translateY(1px) scale(.998); }
+    .btn:disabled{ opacity:0.6; cursor:not-allowed; box-shadow:none; }
+
+    .meta{
+      margin-top:10px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      font-size:13px;
+      color:rgba(255,255,255,0.9);
+    }
+
+    .message{
+      margin-top:12px;
+      padding:10px 12px;
+      border-radius:10px;
+      font-size:14px;
+      display:none;
+    }
+
+    .message.show{ display:block; }
+    .message.ok{ background: rgba(46,204,113,0.12); color: var(--success); border:1px solid rgba(46,204,113,0.12); }
+    .message.err{ background: rgba(231,76,60,0.08); color: var(--danger); border:1px solid rgba(231,76,60,0.08); }
+
+    .small{
+      font-size:12px;
+      color: rgba(255,255,255,0.85);
+    }
+
+    @media (max-width:420px){
+      .container{ padding:20px; border-radius:14px; }
+      .brand h1{ font-size:16px; }
+    }
+  </style>
+</head>
+<body>
+  <form method="post">
+    <div class="container" role="main" aria-labelledby="loginTitle">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">
+          <img src="https://upload.wikimedia.org/wikipedia/en/2/20/Midnapore_College.png" alt="Midnapore College Logo">
+        </div>
+        <div>
+          <h1 id="loginTitle">Login</h1>
+          <p class="lead">Please enter your username and password to sign in securely.</p>
+        </div>
+      </div>
+
+      <form id="loginForm" novalidate>
+        <!-- Role selection dropdown -->
+        <div class="field">
+          <label for="role">Login as</label>
+          <select name="choice"style="width:100%;
+          padding: 10px;border: 1px solid rgba(255,255,255,0.3);background-color:rgba(255,255,255,0.2);
+          color:black;z-index: 9999;position: relative;backdrop-filter:blur(10px);">
+            <option value="" disabled selected>Select your role</option>
+            <option value="student">Student</option>
+            <option value="teacher">Teacher</option>
+            <option value="principal">Principal</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="username">Username</label>
+          <input id="username" name="username" type="text" placeholder="Your username" autocomplete="username" required />
+        </div>
+
+        <div class="field">
+          <label for="password">Password</label>
+          <input id="password" name="password" type="password" placeholder="••••••••" autocomplete="current-password" required />
+        </div>
+
+        <div class="controls">
+          <label class="remember">
+            <input id="showPass" type="checkbox" />
+            <span class="small">Show</span>
+          </label>
+
+          <label class="remember">
+            <input id="remember" type="checkbox" />
+            <span class="small">Remember me</span>
+          </label>
+        </div>
+
+        <button class="btn" id="loginBtn" type="submit">Login</button>
+
+        <div class="meta">
+          <div class="small">Don't have an account? <a href="#" style="color:var(--accent); text-decoration:none;">Sign up</a></div>
+          <div class="small"><a href="#" style="color:rgba(255,255,255,0.9); text-decoration:none;">Forgot password?</a></div>
+        </div>
+
